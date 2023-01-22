@@ -18,33 +18,14 @@
 				<button id="restart-button" class="btn btn-primary m-1">Restart</button>
 			</div>
 		</div>
-		<div class="container d-flex justify-content-center align-items-center">
-			<div id="grid" class="grid d-flex flex-wrap bg-dark m-3">
-				<script>
-					let grid = document.getElementById("grid");
-					for (let y = 0; y < 20; y++){
-						for (let x = 0; x < 10; x++){
-							let block = document.createElement("div");
-							block.setAttribute("id", ""+y+","+x);
-							block.classList.add("block", "border", "border-secondary");
-							grid.append(block);
-						}
-					}
-				</script>
+		<div id="view">
+			<div class="container d-flex justify-content-center align-items-center">
+				<div id="grid" class="grid d-flex flex-wrap bg-dark m-3">
+				</div>
+				<div id="next-block" class="next-block d-flex flex-wrap bg-dark m-3">
+				</div>
 			</div>
-			<div id="next-block" class="next-block d-flex flex-wrap bg-dark m-3">
-				<script>
-					let nextBlock = document.getElementById("next-block");
-					for (let y = 0; y < 4; y++){
-						for (let x = 0; x < 4; x++){
-							let block = document.createElement("div");
-							block.setAttribute("id", ""+y+","+x);
-							block.classList.add("block");
-							nextBlock.append(block);
-						}
-					}
-				</script>
-			</div>
+			<script src="view.js"></script>
 		</div>
 		<div>
 			<!-- テスト用のエリア-->
