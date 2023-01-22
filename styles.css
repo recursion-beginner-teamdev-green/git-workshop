@@ -1,1 +1,22 @@
+.title {
+	height: 25vh;
+}
 
+.container {
+	width: 100vw;
+	height: 60vh;
+}
+.grid {
+	width: 200px;
+	height: 400px;
+}
+
+.block {
+	height: 20px;
+	width: 20px;
+}
+
+.next-block {
+	width: 120px;
+	height: 120px;
+}
