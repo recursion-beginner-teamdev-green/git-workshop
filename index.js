@@ -13,9 +13,7 @@ testConfig.playAreaPrintBtn.addEventListener("click", () =>
   playArea.printPlayArea()
 );
 testConfig.createTetorisBlockBtn.addEventListener("click", () => {
-  const block = new TetorisBlock("red");
-  console.log(block);
-  playArea.setTetorisBlock(block);
+  playArea.generateTetorisBlockAtInitialPosition();
 });
 
 document.addEventListener("keydown", (event) => {
