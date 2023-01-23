@@ -45,5 +45,5 @@ input = {
     9: ["empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty"]
   };
 
-console.log(score(input)) 
+output = 10
 */
