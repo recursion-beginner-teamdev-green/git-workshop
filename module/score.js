@@ -21,7 +21,17 @@ export function score(block_arr)
 }
 
 
-/*
+export function add_score(score_val)
+{
+    let score = document.getElementById('score')
+    let current_score = parseInt(score.textContent);
+    current_score = score_val + current_score;
+    score.textContent = current_score;
+}
+
+
+
+/* test
 input = {
     0: ["empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty"],
     1: ["empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty"],
@@ -45,5 +55,5 @@ input = {
     9: ["empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty"]
   };
 
-output = 10
+console.log(score(input))  -> 10
 */
