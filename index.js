@@ -18,5 +18,10 @@ testConfig.createTetorisBlockBtn.addEventListener("click", () => {
 
 document.addEventListener("keydown", (event) => {
   let key = event.key;
+  if(key === "ArrowRight")playArea.moveCurrentBlockRight()
+  if(key === "ArrowLeft")playArea.moveCurrentBlockLeft();
+  if(key === "ArrowDown")playArea.moveCurrentBlockBottom()
   console.log(key);
 });
+
+
