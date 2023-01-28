@@ -1,22 +1,16 @@
+export const setTopscore = (score_val) => {
+    localStorage.setItem("top_score", score_val);
+};
 
-export function store_score(score_val)
-{
-	top_score = localStorage.getItem('top_score');
-    if(istopscore(score_val))
-    {
-    	localStorage.setItem("top_score",score_val);
-    }
+export const getTopScore = () => localStorage.getItem("top_score")
 
-}
-
-function istopscore(score_val){
-	current_score = parseInt(localStorage.getItem('top_score'));
-    if (current_score < score_val)
-    {
-    	return true;
-    }
-    return false;
-}
+export const isTopscore = (score_val) => {
+  let current_score = parseInt(getTopScore());
+  if (current_score < score_val) {
+    return true;
+  }
+  return false;
+};
 
 /* test
 

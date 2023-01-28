@@ -19,22 +19,19 @@
     >
       <h1>Tetris</h1>
       <h4 class="m-3">Score:<span id="score">0</span></h4>
+      <h5 class="m-1">Top Score:<span id="topScore">0</span></h5> 
       <div class="">
         <button id="start-button" class="btn btn-primary m-1">Start</button>
-        <button id="pause-button" class="btn btn-primary m-1">Pause</button>
+        <!-- <button id="pause-button" class="btn btn-primary m-1">Pause</button> -->
       </div>
     </div>
     <div id="view">
       <div class="container d-flex justify-content-center align-items-center">
         <div id="grid" class="grid d-flex flex-wrap m-3"></div>
-        <div id="next-block" class="next-block d-flex flex-wrap m-3"></div>
+        <!-- <div id="next-block" class="next-block d-flex flex-wrap m-3"></div> -->
       </div>
     </div>
     <div>
-      <!-- テスト用のエリア-->
-      <button class="btn" id="playAreaPrint">プレイエリアをプリント</button>
-      <button class="btn" id="createTetorisBlock">テトリスブロック生成</button>
-      <!-- テスト用ここまで -->
     </div>
     <!-- ↓この位置にスクリプトタグ、type=moduleをセットしないとjsファイル同士でのimport・exportができない -->
     <script type="module" src="./module/index.js"></script>
