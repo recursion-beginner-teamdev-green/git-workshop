@@ -50,7 +50,7 @@ const gameOver = () => {
   else {
     alert(`Game over! Your score was ${score}`);
   }
-  config.score.innerHTML = ""
+  config.score.innerHTML = "0"
   resetPlayArea()
 };
 
