@@ -12,7 +12,7 @@ export class PlayArea {
     this.playArea = this.createPlayArea();
     //   現在の操作対象テトリスブロック
     this.currenttetrisBlock = null;
-    this.isGameOn = true;
+    this.isGameOn = false;
   }
 
   //playAreaを生成する関数
@@ -22,7 +22,7 @@ export class PlayArea {
     for (let i = 0; i < this.height; i++)
       playArea[i] = Array(this.width).fill("empty");
     return playArea;
-  }
+  };
 
   generatetetrisBlockAtInitialPosition() {
     //ランダムにテトリスブロックを生成
@@ -143,7 +143,7 @@ export class PlayArea {
   }
   // 特定のx座標y座標が空であるか判断する関数
   isEmpty(x, y) {
-    console.log(this.playArea)
+    console.log(this.playArea);
     return this.playArea[y][x] === "empty";
   }
 
@@ -151,6 +151,34 @@ export class PlayArea {
   setIsGameOn(trueOrFalse) {
     this.isGameOn = trueOrFalse;
   }
+
+  // 一列削除して上から詰める
+  deleteArr(index) {
+    for (let i = index; i > 0; i--) this.playArea[i] = this.playArea[i - 1];
+    // 0列目に新しいempty列を追加
+    this.playArea[0] = Array(this.width).fill("empty");
+    console.log(this.playArea);
+  }
+
+  calculateScore() {
+    let blockArr = this.playArea;
+    let scoreCounter = 0;
+    let score = 0;
+    const isNotEmpty = (value) => value != "empty";
+
+    for (let i = 0; i < Object.keys(blockArr).length; i++) {
+      //　配列の中に"empty"が１つ以上あるか確認
+      if (blockArr[i].every(isNotEmpty)) {
+        console.log(blockArr[i]);
+        scoreCounter++;
+        // 配列を削除
+        this.deleteArr(i);
+      }
+    }
+    score = scoreCounter * 10;
+    return score;
+  }
+
   printPlayArea() {
     console.log(this.playArea);
     console.log(this.currenttetrisBlock);
@@ -258,9 +286,9 @@ export class tetrisBlock {
       let currentY = this.block[i].getY();
       this.block[i].setY(currentY + 1);
     }
-  };
+  }
 
-  rotatetetrisBlock(){
+  rotatetetrisBlock() {
     for (let i = 0; i < this.block.length; i++) {
       //現在のx座標を取得
       let currentY = this.block[i].getY();

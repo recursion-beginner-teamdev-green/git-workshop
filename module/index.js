@@ -1,21 +1,29 @@
 import { PlayArea, tetrisBlock } from "./model.js";
+import { getTopScore, isTopscore, setTopscore } from "./score_localstorage.js";
 import {
   addColorOfTetrisBlock,
+  addScore,
   clearColorOfTetrisBlock,
-  initializePlayArea,
+  updateNextBlockArea,
+  updatePlayArea,
 } from "./view.js";
 
 //dom要素はここで宣言？
 const config = {
-  playAreaPrintBtn: document.getElementById("playAreaPrint"),
-  createtetrisBlockBtn: document.getElementById("createtetrisBlock"),
   startBtn: document.getElementById("start-button"),
-  pauseBtn: document.getElementById("pause-button"),
+  // pauseBtn: document.getElementById("pause-button"),
+  score : document.getElementById("score"),
 };
 
 let playArea = new PlayArea();
 
-initializePlayArea(playArea);
+updatePlayArea(playArea)
+
+const resetPlayArea = () => {
+  playArea = new PlayArea();
+  updatePlayArea(playArea);
+  // updateNextBlockArea();
+};
 
 // ブロックを開始位置に生成する関数
 const generateBlock = () => {
@@ -24,11 +32,33 @@ const generateBlock = () => {
   if (playArea.isGameOn) addColorOfTetrisBlock(playArea.currenttetrisBlock);
 };
 
-// 継続的に新しいブロックを生成
-const consistantlyGenerateNewBlock = () => {
-  if(!playArea.isGameOn)alert("game over")
+// ブロックが下についた時点でスコア換算
+const evaluateScore = () => {
+  const score = playArea.calculateScore();
+  addScore(score);
+};
+
+// game over時の関数
+const gameOver = () => {
+  const score = parseInt(config.score.innerHTML);
+  const topScoreEle = document.getElementById("topScore");
+  if (isTopscore(score)) {
+    setTopscore(score);
+    topScoreEle.innerHTML = score;
+    alert(`Game over! Your score was ${score}. It was top score ever.`)
+  }
   else {
-    generateBlock()
+    alert(`Game over! Your score was ${score}`);
+  }
+  config.score.innerHTML = ""
+  resetPlayArea()
+};
+
+// 一連のゲームサイクル
+const gameCycle = () => {
+  if (!playArea.isGameOn) gameOver();
+  else {
+    generateBlock();
     const interValId = setInterval(() => {
       if (playArea.isCurrentBlockMovableToBottom()) {
         clearColorOfTetrisBlock(playArea.currenttetrisBlock);
@@ -36,11 +66,13 @@ const consistantlyGenerateNewBlock = () => {
         addColorOfTetrisBlock(playArea.currenttetrisBlock);
       } else {
         clearInterval(interValId);
-        consistantlyGenerateNewBlock()
+        evaluateScore();
+        updatePlayArea(playArea);
+        gameCycle();
       }
     }, 1000);
   }
-}
+};
 
 // 受け取ったkeyによって,その方向にブロックを動かす関数。動けない場合は動かない
 const moveBlock = (key) => {
@@ -63,17 +95,13 @@ const moveBlock = (key) => {
   }
 };
 
-// config.playAreaPrintBtn.addEventListener("click", () =>playArea.printPlayArea()
-// );
-// config.createtetrisBlockBtn.addEventListener("click", () => {
-//   generateBlock()
-// });
-
-config.startBtn.addEventListener(
-  "click",
-  () => {
-    consistantlyGenerateNewBlock()
-    });
+config.startBtn.addEventListener("click", () => {
+  if (playArea.isGameOn) return;
+  else {
+    playArea.setIsGameOn(true);
+    gameCycle();
+  }
+});
 
 document.addEventListener("keydown", (event) => {
   moveBlock(event.key);
