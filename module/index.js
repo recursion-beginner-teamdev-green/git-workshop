@@ -1,14 +1,14 @@
-import { PlayArea, TetorisBlock } from "./model.js";
+import { PlayArea, tetrisBlock } from "./model.js";
 import {
-  addColorOfTetorisBlock,
-  clearColorOfTetorisBlock,
+  addColorOfTetrisBlock,
+  clearColorOfTetrisBlock,
   initializePlayArea,
 } from "./view.js";
 
 //dom要素はここで宣言？
 const config = {
   playAreaPrintBtn: document.getElementById("playAreaPrint"),
-  createTetorisBlockBtn: document.getElementById("createTetorisBlock"),
+  createtetrisBlockBtn: document.getElementById("createtetrisBlock"),
   startBtn: document.getElementById("start-button"),
   pauseBtn: document.getElementById("pause-button"),
 };
@@ -20,50 +20,60 @@ initializePlayArea(playArea);
 // ブロックを開始位置に生成する関数
 const generateBlock = () => {
   console.log("generate");
-  playArea.generateTetorisBlockAtInitialPosition();
-  if (playArea.isGameOn) addColorOfTetorisBlock(playArea.currentTetorisBlock);
+  playArea.generatetetrisBlockAtInitialPosition();
+  if (playArea.isGameOn) addColorOfTetrisBlock(playArea.currenttetrisBlock);
 };
+
+// 継続的に新しいブロックを生成
+const consistantlyGenerateNewBlock = () => {
+  if(!playArea.isGameOn)alert("game over")
+  else {
+    generateBlock()
+    const interValId = setInterval(() => {
+      if (playArea.isCurrentBlockMovableToBottom()) {
+        clearColorOfTetrisBlock(playArea.currenttetrisBlock);
+        playArea.moveCurrentBlockBottom();
+        addColorOfTetrisBlock(playArea.currenttetrisBlock);
+      } else {
+        clearInterval(interValId);
+        consistantlyGenerateNewBlock()
+      }
+    }, 1000);
+  }
+}
+
 // 受け取ったkeyによって,その方向にブロックを動かす関数。動けない場合は動かない
 const moveBlock = (key) => {
   if (key === "ArrowRight" && playArea.isCurrentBlockMovableToRight()) {
     console.log("right");
-    clearColorOfTetorisBlock(playArea.currentTetorisBlock);
+    clearColorOfTetrisBlock(playArea.currenttetrisBlock);
     playArea.moveCurrentBlockRight();
-    addColorOfTetorisBlock(playArea.currentTetorisBlock);
+    addColorOfTetrisBlock(playArea.currenttetrisBlock);
   }
   if (key === "ArrowLeft" && playArea.isCurrentBlockMovableToLeft()) {
     console.log("left");
-    clearColorOfTetorisBlock(playArea.currentTetorisBlock);
+    clearColorOfTetrisBlock(playArea.currenttetrisBlock);
     playArea.moveCurrentBlockLeft();
-    addColorOfTetorisBlock(playArea.currentTetorisBlock);
+    addColorOfTetrisBlock(playArea.currenttetrisBlock);
   }
   if (key === "ArrowDown" && playArea.isCurrentBlockMovableToBottom()) {
-    clearColorOfTetorisBlock(playArea.currentTetorisBlock);
+    clearColorOfTetrisBlock(playArea.currenttetrisBlock);
     playArea.moveCurrentBlockBottom();
-    addColorOfTetorisBlock(playArea.currentTetorisBlock);
+    addColorOfTetrisBlock(playArea.currenttetrisBlock);
   }
 };
 
 // config.playAreaPrintBtn.addEventListener("click", () =>playArea.printPlayArea()
 // );
-// config.createTetorisBlockBtn.addEventListener("click", () => {
+// config.createtetrisBlockBtn.addEventListener("click", () => {
 //   generateBlock()
 // });
 
-config.startBtn.addEventListener("click", () => {
-  while (playArea.isGameOn) {
-    generateBlock();
-    const interValId = setInterval(() => {
-      if (playArea.isCurrentBlockMovableToBottom()) {
-        clearColorOfTetorisBlock(playArea.currentTetorisBlock);
-        playArea.moveCurrentBlockBottom();
-        addColorOfTetorisBlock(playArea.currentTetorisBlock);
-      } else {
-        clearInterval(interValId);
-      }
-    }, 1000);
-  }
-});
+config.startBtn.addEventListener(
+  "click",
+  () => {
+    consistantlyGenerateNewBlock()
+    });
 
 document.addEventListener("keydown", (event) => {
   moveBlock(event.key);

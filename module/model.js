@@ -11,7 +11,7 @@ export class PlayArea {
   constructor() {
     this.playArea = this.createPlayArea();
     //   現在の操作対象テトリスブロック
-    this.currentTetorisBlock = null;
+    this.currenttetrisBlock = null;
     this.isGameOn = true;
   }
 
@@ -24,13 +24,13 @@ export class PlayArea {
     return playArea;
   }
 
-  generateTetorisBlockAtInitialPosition() {
+  generatetetrisBlockAtInitialPosition() {
     //ランダムにテトリスブロックを生成
-    let newTetorisBlock = TetorisBlock.generateRandomTetorisBlock();
+    let newtetrisBlock = tetrisBlock.generateRandomtetrisBlock();
 
     // ブロック生成先がemptyでなければgameを終わらせる
-    for (let i = 0; i < newTetorisBlock.block.length; i++) {
-      let cur = newTetorisBlock.block[i];
+    for (let i = 0; i < newtetrisBlock.block.length; i++) {
+      let cur = newtetrisBlock.block[i];
       console.log(cur);
       console.log(this.playArea);
       if (!this.isEmpty(cur.x, cur.y)) {
@@ -41,40 +41,40 @@ export class PlayArea {
     }
     // isGameOnのままならブロックをセット
     if (this.isGameOn) {
-      this.setTetorisBlock(newTetorisBlock);
-      this.setCurrentTetorisBlock(newTetorisBlock);
+      this.settetrisBlock(newtetrisBlock);
+      this.setCurrenttetrisBlock(newtetrisBlock);
     }
   }
 
   moveCurrentBlockRight() {
     //元々のブロックが占めていた座標を一旦全てemptyにする
-    this.clearTetorisBlock(this.currentTetorisBlock);
+    this.cleartetrisBlock(this.currenttetrisBlock);
     //元々のブロック位置を右に一個ずらす
-    this.currentTetorisBlock.moveTetorisBlockRight();
-    this.setTetorisBlock(this.currentTetorisBlock);
+    this.currenttetrisBlock.movetetrisBlockRight();
+    this.settetrisBlock(this.currenttetrisBlock);
   }
 
   moveCurrentBlockLeft() {
     //元々のブロックが占めていた座標を一旦全てemptyにする
-    this.clearTetorisBlock(this.currentTetorisBlock);
+    this.cleartetrisBlock(this.currenttetrisBlock);
     // 左に一個ずらす
-    this.currentTetorisBlock.moveTetorisBlockLeft();
+    this.currenttetrisBlock.movetetrisBlockLeft();
     //ずらしたcurrentBlock部分を色で設定する
-    this.setTetorisBlock(this.currentTetorisBlock);
+    this.settetrisBlock(this.currenttetrisBlock);
   }
 
   moveCurrentBlockBottom() {
     //元々のブロックが占めていた座標を一旦全てemptyにする
-    this.clearTetorisBlock(this.currentTetorisBlock);
+    this.cleartetrisBlock(this.currenttetrisBlock);
     // 左に一個ずらす
-    this.currentTetorisBlock.moveTetorisBlockBottom();
+    this.currenttetrisBlock.movetetrisBlockBottom();
     //ずらしたcurrentBlock部分を色で設定する
-    this.setTetorisBlock(this.currentTetorisBlock);
+    this.settetrisBlock(this.currenttetrisBlock);
   }
   // 右に動けるかどうかTrue/falseで返す関数
   isCurrentBlockMovableToRight() {
-    for (let i = 0; i < this.currentTetorisBlock.block.length; i++) {
-      let curMinBlock = this.currentTetorisBlock.block[i];
+    for (let i = 0; i < this.currenttetrisBlock.block.length; i++) {
+      let curMinBlock = this.currenttetrisBlock.block[i];
       let x = curMinBlock.getX();
       if (x === this.width - 1) return false;
       if (curMinBlock.isRightOpen && !this.isEmpty(x + 1, curMinBlock.getY())) {
@@ -85,8 +85,8 @@ export class PlayArea {
   }
   // 左に動けるかどうかTrue/falseで返す関数
   isCurrentBlockMovableToLeft() {
-    for (let i = 0; i < this.currentTetorisBlock.block.length; i++) {
-      let curMinBlock = this.currentTetorisBlock.block[i];
+    for (let i = 0; i < this.currenttetrisBlock.block.length; i++) {
+      let curMinBlock = this.currenttetrisBlock.block[i];
       let x = curMinBlock.getX();
       if (x === 0) return false;
       if (curMinBlock.isLeftOpen && !this.isEmpty(x - 1, curMinBlock.getY())) {
@@ -98,8 +98,8 @@ export class PlayArea {
 
   // 下に動けるかどうかTrue/falseで返す関数
   isCurrentBlockMovableToBottom() {
-    for (let i = 0; i < this.currentTetorisBlock.block.length; i++) {
-      let curMinBlock = this.currentTetorisBlock.block[i];
+    for (let i = 0; i < this.currenttetrisBlock.block.length; i++) {
+      let curMinBlock = this.currenttetrisBlock.block[i];
       let y = curMinBlock.getY();
       if (y === this.height - 1) return false;
       if (
@@ -112,9 +112,9 @@ export class PlayArea {
     return true;
   }
 
-  //TetorisBlockを受け取って、操作対象テトリスブロックにセットする関数
-  setCurrentTetorisBlock(tetorisBlock) {
-    this.currentTetorisBlock = tetorisBlock;
+  //tetrisBlockを受け取って、操作対象テトリスブロックにセットする関数
+  setCurrenttetrisBlock(tetrisBlock) {
+    this.currenttetrisBlock = tetrisBlock;
   }
 
   //MinBlockを受け取って、特定の座標の色を変化させる関数
@@ -127,16 +127,16 @@ export class PlayArea {
     this.playArea[minblock.y][minblock.x] = "empty";
   }
 
-  //TetorisBlockを受け取って、そのTetorisBlockが含んでるMinBlockの座標全ての色を変化させる関数
-  setTetorisBlock(tetorisBlock) {
-    let block = tetorisBlock.block;
+  //tetrisBlockを受け取って、そのtetrisBlockが含んでるMinBlockの座標全ての色を変化させる関数
+  settetrisBlock(tetrisBlock) {
+    let block = tetrisBlock.block;
     for (let i = 0; i < block.length; i++) {
       this.setMinBlock(block[i]);
     }
   }
 
-  clearTetorisBlock(tetorisBlock) {
-    let block = tetorisBlock.block;
+  cleartetrisBlock(tetrisBlock) {
+    let block = tetrisBlock.block;
     for (let i = 0; i < block.length; i++) {
       this.clearMinblock(block[i]);
     }
@@ -153,7 +153,7 @@ export class PlayArea {
   }
   printPlayArea() {
     console.log(this.playArea);
-    console.log(this.currentTetorisBlock);
+    console.log(this.currenttetrisBlock);
     console.log(this.isGameOn);
   }
 }
@@ -189,12 +189,12 @@ export class MinBlock {
 }
 
 // MinBlockで形成される各色のテトリスブロック。MinBlockの配列。
-export class TetorisBlock {
+export class tetrisBlock {
   constructor(blockArr) {
     this.block = blockArr;
   }
   //ランダムにテトリスブロックを生成する関数
-  static generateRandomTetorisBlock() {
+  static generateRandomtetrisBlock() {
     const colorList = ["red", "blue", "green", "yellow", "purple"];
     //MinBlockを利用した一つ一つのテトリスブロック
     const blockShapeConfig = {
@@ -232,11 +232,11 @@ export class TetorisBlock {
     };
     let randomIndex = Math.floor(Math.random() * colorList.length);
 
-    return new TetorisBlock(blockShapeConfig[colorList[randomIndex]]);
+    return new tetrisBlock(blockShapeConfig[colorList[randomIndex]]);
   }
 
   //テトリスブロックを右に+1動かす関数
-  moveTetorisBlockRight() {
+  movetetrisBlockRight() {
     for (let i = 0; i < this.block.length; i++) {
       //現在のx座標を取得
       let currentX = this.block[i].getX();
@@ -244,7 +244,7 @@ export class TetorisBlock {
     }
   }
   //テトリスブロックを左に+1動かす関数
-  moveTetorisBlockLeft() {
+  movetetrisBlockLeft() {
     for (let i = 0; i < this.block.length; i++) {
       //現在のx座標を取得
       let currentX = this.block[i].getX();
@@ -252,7 +252,7 @@ export class TetorisBlock {
     }
   }
 
-  moveTetorisBlockBottom() {
+  movetetrisBlockBottom() {
     for (let i = 0; i < this.block.length; i++) {
       //現在のx座標を取得
       let currentY = this.block[i].getY();
@@ -260,7 +260,7 @@ export class TetorisBlock {
     }
   };
 
-  rotateTetorisBlock(){
+  rotatetetrisBlock(){
     for (let i = 0; i < this.block.length; i++) {
       //現在のx座標を取得
       let currentY = this.block[i].getY();

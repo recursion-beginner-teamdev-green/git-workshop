@@ -21,16 +21,16 @@ export function initializePlayArea(playArea) {
   }
 }
 
-//   TetorisBlockを受け取って、そのTetorisBlockが含んでるMinBlockのdom上座標全ての色を変化させる関数
-export const addColorOfTetorisBlock = (tetorisBlock) => {
-  let block = tetorisBlock.block;
+//   tetrisBlockを受け取って、そのtetrisBlockが含んでるMinBlockのdom上座標全ての色を変化させる関数
+export const addColorOfTetrisBlock = (tetrisBlock) => {
+  let block = tetrisBlock.block;
   for (let i = 0; i < block.length; i++) {
     addColorToMinBlock(block[i]);
   }
 };
-//   TetorisBlockを受け取って、そのTetorisBlockが含んでるMinBlockのdom上座標全ての色をemptyにする関数
-export const clearColorOfTetorisBlock = (tetorisBlock) => {
-  let block = tetorisBlock.block;
+//   tetrisBlockを受け取って、そのtetrisBlockが含んでるMinBlockのdom上座標全ての色をemptyにする関数
+export const clearColorOfTetrisBlock = (tetrisBlock) => {
+  let block = tetrisBlock.block;
   for (let i = 0; i < block.length; i++) {
     clearMinBlock(block[i]);
   }
