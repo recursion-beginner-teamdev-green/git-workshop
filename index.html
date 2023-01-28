@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="styles.css" />
-		<title>Tetris</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-	</head>
-	<body>
-		<div class="title d-flex justify-content-center align-items-center flex-column">
-			<h1>Tetris</h1>
-			<h4 class="m-3">Score:<span id="score">0</span></h4>
-			<div class="">
-				<button id="start-button" class="btn btn-primary m-1">Start</button>
-				<button id="restart-button" class="btn btn-primary m-1">Restart</button>
-			</div>
-		</div>
-		<div id="view">
-			<div class="container d-flex justify-content-center align-items-center">
-				<div id="grid" class="grid d-flex flex-wrap m-3">
-				</div>
-				<div id="next-block" class="next-block d-flex flex-wrap m-3">
-				</div>
-			</div>
-		</div>
-		<div>
-			<!-- テスト用のエリア-->
-			<button class="btn" id="playAreaPrint">プレイエリアをプリント</button>
-			<button class="btn" id="createTetorisBlock">テトリスブロック生成</button>
-			<!-- テスト用ここまで -->
-		</div>
-		<!-- ↓この位置にスクリプトタグ、type=moduleをセットしないとjsファイル同士でのimport・exportができない -->
-		<script type="module" src="model.js"></script>
-		<script type="module" src="index.js"></script>
-		<script type="module" src="view.js"></script>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Tetris</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div
+      class="title d-flex justify-content-center align-items-center flex-column"
+    >
+      <h1>Tetris</h1>
+      <h4 class="m-3">Score:<span id="score">0</span></h4>
+      <div class="">
+        <button id="start-button" class="btn btn-primary m-1">Start</button>
+        <button id="pause-button" class="btn btn-primary m-1">Pause</button>
+      </div>
+    </div>
+    <div id="view">
+      <div class="container d-flex justify-content-center align-items-center">
+        <div id="grid" class="grid d-flex flex-wrap m-3"></div>
+        <div id="next-block" class="next-block d-flex flex-wrap m-3"></div>
+      </div>
+    </div>
+    <div>
+      <!-- テスト用のエリア-->
+      <button class="btn" id="playAreaPrint">プレイエリアをプリント</button>
+      <button class="btn" id="createTetorisBlock">テトリスブロック生成</button>
+      <!-- テスト用ここまで -->
+    </div>
+    <!-- ↓この位置にスクリプトタグ、type=moduleをセットしないとjsファイル同士でのimport・exportができない -->
+    <script type="module" src="./module/index.js"></script>
+  </body>
 </html>

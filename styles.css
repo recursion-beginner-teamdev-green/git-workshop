@@ -21,6 +21,9 @@
 	height: 80px;
 }
 
+.empty {
+	background-color: #F8F9FA;
+} 
 .red {
 	background-color: red;
 }
